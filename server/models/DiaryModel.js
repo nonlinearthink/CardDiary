@@ -170,20 +170,20 @@ class DiaryModel {
   }
 }
 
-(async () => {
-  let model = new DiaryModel();
-  await model.createDiary("zxj", "2020-6-8");
-  await model.setTitle("python", { author: "zxj", dateString: "2020-6-8" });
-  await model.setTag("py", { author: "zxj", dateString: "2020-6-8" });
-  await model.setMood("happy", { author: "zxj", dateString: "2020-6-8" });
-  await model.setWeather("sunny", { author: "zxj", dateString: "2020-6-8" });
-  await model.setBody("python is so good", {
-    author: "zxj",
-    dateString: "2020-6-8",
-  });
-  await model.setFavor("zxj", "2020-6-8");
-  await model.queryAll({ author: "zxj", dateString: "2020-6-8" });
-  db.close();
-})();
+// (async () => {
+//   let model = new DiaryModel();
+//   await model.createDiary("zxj", "2020-6-8");
+//   await model.setTitle("python", { author: "zxj", dateString: "2020-6-8" });
+//   await model.setTag("py", { author: "zxj", dateString: "2020-6-8" });
+//   await model.setMood("happy", { author: "zxj", dateString: "2020-6-8" });
+//   await model.setWeather("sunny", { author: "zxj", dateString: "2020-6-8" });
+//   await model.setBody("python is so good", {
+//     author: "zxj",
+//     dateString: "2020-6-8",
+//   });
+//   await model.setFavor("zxj", "2020-6-8");
+//   await model.queryAll({ author: "zxj", dateString: "2020-6-8" });
+//   db.close();
+// })();
 
 module.exports = DiaryModel;

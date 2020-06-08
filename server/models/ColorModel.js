@@ -47,6 +47,7 @@ class ColorModel {
         await new this.model({ username, date: { year, month } }).save();
       }
     }
+    console.log("init card color");
   }
   async setColor(color, { username, dateString }) {
     let date = new Date(dateString);
@@ -64,11 +65,11 @@ class ColorModel {
   }
 }
 
-(async () => {
-  var model = new ColorModel();
-  await model.initByYearInterval("zxj", 2010, 2020);
-  await model.setColor("Gold", { username: "zxj", dateString: "2020-5" });
-  db.close();
-})();
+// (async () => {
+//   var model = new ColorModel();
+//   await model.initByYearInterval("zxj", 2010, 2020);
+//   await model.setColor("Gold", { username: "zxj", dateString: "2020-5" });
+//   db.close();
+// })();
 
 module.exports = ColorModel;

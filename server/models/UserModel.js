@@ -16,6 +16,7 @@ var UserSchema = mongoose.Schema({
   diaryname: { type: String, default: "" },
   feeling: { type: String, default: "" },
   token: { type: String, default: "" },
+  privateKey: { type: String, default: "" },
 });
 
 class UserModel {
@@ -40,15 +41,15 @@ class UserModel {
     );
     console.log(`set ${result.username}'passowrd to ${result.password}`);
   }
-  async getToken(username) {
+  async getKey(username) {
     let result = await this.model.findOne({ username });
-    console.log(`get ${result.username}'token: ${result.token}`);
-    return result.token;
+    console.log(`get ${result.username}'key: ${result.privateKey}`);
+    return result.privateKey;
   }
-  async setToken(username, token) {
+  async setToken(username, token, privateKey) {
     let result = await this.model.findOneAndUpdate(
       { username },
-      { token },
+      { token, privateKey },
       { new: true }
     );
     console.log(`set ${result.username}'token to ${result.token}`);
