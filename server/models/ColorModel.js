@@ -65,11 +65,4 @@ class ColorModel {
   }
 }
 
-// (async () => {
-//   var model = new ColorModel();
-//   await model.initByYearInterval("zxj", 2010, 2020);
-//   await model.setColor("Gold", { username: "zxj", dateString: "2020-5" });
-//   db.close();
-// })();
-
 module.exports = ColorModel;

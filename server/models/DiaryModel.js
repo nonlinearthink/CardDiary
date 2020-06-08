@@ -32,16 +32,19 @@ class DiaryModel {
   }
   async createDiary(author, dateString) {
     let createDate = new Date(dateString);
-    let result = await new this.model({
-      author,
-      date: {
-        year: createDate.getFullYear(),
-        month: createDate.getMonth(),
-        day: createDate.getDate(),
-      },
-    }).save();
-    console.log("create a new diary:");
-    console.log(result);
+    let result = null;
+    if ((await this.query({ author, dateString })) == null) {
+      result = await new this.model({
+        author,
+        date: {
+          year: createDate.getFullYear(),
+          month: createDate.getMonth(),
+          day: createDate.getDate(),
+        },
+      }).save();
+      console.log("create a new diary:");
+      console.log(result);
+    }
     return result;
   }
   async setTitle(title, { author, dateString }) {
@@ -152,7 +155,7 @@ class DiaryModel {
       `mark favor to the diary which create by ${result.author} on ${result.dateString}`
     );
   }
-  async queryAll({ author, dateString }) {
+  async query({ author, dateString }) {
     let date = new Date(dateString);
     let result = await this.model.findOne({
       author,
@@ -163,27 +166,15 @@ class DiaryModel {
       },
     });
     console.log(
-      `query all of the diary which create by ${result.author} on ${result.dateString}:`
+      `query the diary which create by ${result.author} on ${result.dateString}:`
     );
     console.log(result);
     return result;
   }
+  async queryByAuthor(author) {
+    let resultSet = this.model.find({ author });
+    console.log(resultSet);
+  }
 }
-
-// (async () => {
-//   let model = new DiaryModel();
-//   await model.createDiary("zxj", "2020-6-8");
-//   await model.setTitle("python", { author: "zxj", dateString: "2020-6-8" });
-//   await model.setTag("py", { author: "zxj", dateString: "2020-6-8" });
-//   await model.setMood("happy", { author: "zxj", dateString: "2020-6-8" });
-//   await model.setWeather("sunny", { author: "zxj", dateString: "2020-6-8" });
-//   await model.setBody("python is so good", {
-//     author: "zxj",
-//     dateString: "2020-6-8",
-//   });
-//   await model.setFavor("zxj", "2020-6-8");
-//   await model.queryAll({ author: "zxj", dateString: "2020-6-8" });
-//   db.close();
-// })();
 
 module.exports = DiaryModel;

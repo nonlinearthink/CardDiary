@@ -28,7 +28,9 @@ module.exports = async (ctx, next) => {
     await tagModel.createTag(ctx.params.id, tag);
   });
   await diaryModel.setBody(ctx.query.body, selector);
-  if (ctx.params.favor) await diaryModel.setFavor(selector);
+  console.log(ctx.query.favor);
+  if (ctx.query.favor)
+    await diaryModel.setFavor(selector.author, selector.dateString);
   ctx.status = 200;
   if (decode.exp <= new Date().getMilliseconds()) {
     msg.success = false;
