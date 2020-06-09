@@ -30,6 +30,10 @@ class TagModel {
       console.error(err.toString());
     }
   }
+  async query(username) {
+    let resultSet = await this.model.find({ username });
+    return resultSet;
+  }
 }
 
 module.exports = TagModel;

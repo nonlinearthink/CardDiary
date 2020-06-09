@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 module.exports = async (ctx, next) => {
   let userModel = new UserModel();
   let key = await userModel.getKey(ctx.params.id);
-  let decode = await jwt.verify(ctx.query.token, key);
+  let decode = await jwt.verify(ctx.headers.token, key);
   let msg = {
     service: "modifyBasicSetting",
     success: decode.user == ctx.params.id,

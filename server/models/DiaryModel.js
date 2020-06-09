@@ -33,7 +33,12 @@ class DiaryModel {
   async createDiary(author, dateString) {
     let createDate = new Date(dateString);
     let result = null;
-    if ((await this.query({ author, dateString })) == null) {
+    try {
+      result = await this.query({ author, dateString });
+    } catch (error) {
+      console.log(error);
+    }
+    if (result == null) {
       result = await new this.model({
         author,
         date: {
@@ -171,10 +176,41 @@ class DiaryModel {
     console.log(result);
     return result;
   }
-  async queryByAuthor(author) {
-    let resultSet = this.model.find({ author });
-    console.log(resultSet);
+  async queryFavor(author) {
+    let resultSet = await this.model.find({
+      author,
+      favor: true,
+    });
+    return resultSet;
+  }
+  async queryAll(author) {
+    let resultSet = await this.model.find({ author });
+    return resultSet;
+  }
+  async queryMood(author, mood) {
+    let resultSet = await this.model.find({ author, mood });
+    console.log(resultSet.length);
+    return resultSet;
+  }
+  async queryWeather(author, weather) {
+    let resultSet = await this.model.find({ author, weather });
+    console.log(resultSet.length);
+    return resultSet;
+  }
+  async queryTag(author, tag) {
+    let querySet = await this.queryAll(author);
+    let resultSet = [];
+    for (let result of querySet) {
+      if (result.tag.split(",").includes(tag)) {
+        resultSet.push(result);
+      }
+    }
+    console.log(resultSet.length);
+    return resultSet;
   }
 }
-
+// (async () => {
+//   console.log(await new DiaryModel().queryTag("nonlinearthink"));
+//   db.close();
+// })();
 module.exports = DiaryModel;

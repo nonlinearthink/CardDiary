@@ -67,7 +67,7 @@ class UserModel {
     );
     console.log(`${result.username} become VIP`);
   }
-  async queryAll(username) {
+  async query(username) {
     let result = await this.model.findOne({ username });
     console.log(`query all of ${result.username}:`);
     console.log(result);

@@ -1,10 +1,11 @@
 const UserModel = require("../models/UserModel");
 const DiaryModel = require("../models/DiaryModel");
 const TagModel = require("../models/TagModel");
+const MoodModel = require("../models/MoodModel");
+const WeatherModel = require("../models/WeatherModel");
 const jwt = require("jsonwebtoken");
 
 module.exports = async (ctx, next) => {
-  console.log(ctx.request);
   let userModel = new UserModel();
   let diaryModel = new DiaryModel();
   let tagModel = new TagModel();
@@ -20,8 +21,10 @@ module.exports = async (ctx, next) => {
   };
   await diaryModel.createDiary(ctx.params.id, ctx.query.date);
   await diaryModel.setTitle(ctx.query.title, selector);
+  await new WeatherModel().createMood(ctx.params.id, ctx.query.weather);
   await diaryModel.setWeather(ctx.query.weather, selector);
-  await diaryModel.setMood(ctx.query.mood, selector);
+  await new MoodModel().createMood(ctx.params.id, ctx.query.mood);
+  await await diaryModel.setMood(ctx.query.mood, selector);
   await diaryModel.setTag(ctx.query.tags, selector);
   let tags = ctx.query.tags.split(",");
   await tags.forEach(async (tag) => {
