@@ -6,7 +6,7 @@ module.exports = async (ctx, next) => {
   // 可用的HTTP头部
   ctx.set(
     "Access-Control-Allow-Headers",
-    "Acept, Origin, Content-Type, Authorization"
+    "Acept, Origin, Content-Type, Authorization, token"
   );
   // 可用的媒体类型
   ctx.set("Content-Type", "application/json;charset=utf-8");

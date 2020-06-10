@@ -34,18 +34,18 @@ module.exports = async (ctx, next) => {
     let moods = [];
     (await moodModel.query(user.name)).forEach(async (doc) => {
       let count = (await diaryModel.queryMood(user.name, doc.mood)).length;
-      moods.push({ mood: doc.mood, count });
+      moods.push({ value: doc.mood, count });
     });
     let weathers = [];
     (await weatherModel.query(user.name)).forEach(async (doc) => {
       let count = (await diaryModel.queryWeather(user.name, doc.weather))
         .length;
-      weathers.push({ weather: doc.weather, count });
+      weathers.push({ value: doc.weather, count });
     });
     let tags = [];
     (await tagModel.query(user.name)).forEach(async (doc) => { 
       let count = (await diaryModel.queryTag(user.name, doc.tag)).length;
-      tags.push({ tag: doc.tag, count });
+      tags.push({ value: doc.tag, count });
     });
     msg.statistic = {
       diary: {

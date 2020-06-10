@@ -48,7 +48,6 @@
         >BACK</van-button
       >
     </div>
-
     <van-popup v-model="datePickerVisible" position="bottom">
       <van-datetime-picker
         v-model="currentDate"
@@ -82,12 +81,13 @@ import Poker from "@/components/Poker.vue";
 import Calendar from "@/components/Calendar.vue";
 import colorSetting from "@/static/color.js";
 import monthName from "@/static/month.js";
+
 export default {
   name: "CalendarPage",
   components: {
     StandardCard,
     Poker,
-    Calendar
+    Calendar,
   },
   data() {
     return {

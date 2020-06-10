@@ -64,6 +64,9 @@ export default {
         .then(res => {
           console.log(res);
           if (res.data.success) {
+            this.$store.state.token = res.data.token;
+            this.$store.state.basic = res.data.basic;
+            this.$store.state.statistic = res.data.statistic;
             this.$router.push("home");
           } else {
             this.showMessage = true;
@@ -82,7 +85,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.van-popup{
+.van-popup {
   width: 20vw;
   height: 20vh;
   margin: auto 0;
