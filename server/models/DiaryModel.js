@@ -3,7 +3,13 @@ const db = require("../utils/db");
 
 var DiarySchema = mongoose.Schema({
   title: { type: String, default: "", trim: true },
-  author: { type: String, default: "", required: true },
+  author: {
+    type: String,
+    default: "",
+    required: true,
+    lowercase: true,
+    trim: true,
+  },
   mood: { type: String, default: "" },
   weather: { type: String, default: "" },
   tag: { type: String, default: "" },
