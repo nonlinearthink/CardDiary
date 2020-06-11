@@ -1,12 +1,12 @@
 <template>
   <div class="setting-page">
-    <van-nav-bar title="设置" left-arrow @click-left="goBack"></van-nav-bar>
+    <van-nav-bar title="设置" left-arrow @click-left="goBack" palceholder></van-nav-bar>
     <label class="setting-label">日记本头像</label>
     <van-uploader :after-read="afterRead" />
     <label class="setting-label">日记本名称</label>
-    <textarea name=""></textarea>
+    <textarea name="" v-model="$store.state.basic.diaryname"></textarea>
     <label class="setting-label">今日感想</label>
-    <textarea name=""></textarea>
+    <textarea name="" v-model="$store.state.basic.feeling"></textarea>
   </div>
 </template>
 
@@ -16,6 +16,18 @@ export default {
   methods: {
     goBack() {
       this.$router.go(-1);
+    }
+  },
+  computed: {
+    diaryname() {
+      return this.$store.state.basic.diaryname == ""
+        ? "日记名称"
+        : this.$store.state.basic.diaryname;
+    },
+    feeling() {
+      return this.$store.state.basic.feeling == ""
+        ? "今日感想"
+        : this.$store.state.basic.feeling;
     }
   }
 };

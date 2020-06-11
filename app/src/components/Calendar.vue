@@ -5,7 +5,7 @@
       :key="index"
       :class="{ Sunday: index % 7 == 0, Saturday: index % 7 == 6 }"
     >
-      {{ value == 0 ? "&nbsp;" : value }}
+      <a @click="createDiary(value)">{{ value == 0 ? "&nbsp;" : value }}</a>
     </div>
   </div>
 </template>
@@ -43,6 +43,10 @@ export default {
         if (i >= endDate + startOf) isEnd = true;
         if (isStart && !isEnd) this.placeholders[i] = increaser++;
       }
+    },
+    createDiary(value){
+      this.$store.state.newDate = new Date(`${this.time.getFullYear()}-${this.time.getMonth()+1}-${value}`);
+      this.$router.push('add');
     }
   },
   watch: {

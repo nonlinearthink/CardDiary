@@ -19,6 +19,8 @@ import {
   Button,
   Form,
   Field,
+  Switch,
+  Divider,
 } from "vant";
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
@@ -34,6 +36,8 @@ Vue.use(Popup);
 Vue.use(Button);
 Vue.use(Form);
 Vue.use(Field);
+Vue.use(Switch);
+Vue.use(Divider);
 
 //fontawesome import
 import { library } from "@fortawesome/fontawesome-svg-core";

@@ -87,7 +87,7 @@ export default {
   components: {
     StandardCard,
     Poker,
-    Calendar,
+    Calendar
   },
   data() {
     return {

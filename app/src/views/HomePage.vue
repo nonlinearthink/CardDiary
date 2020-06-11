@@ -7,7 +7,7 @@
     <StandardCard id="count">
       <van-row>
         <van-col span="12" class="count-view">
-          <router-link to="/diary">
+          <router-link to="/diary/all">
             <div class="number-view">
               {{ this.$store.state.statistic.diary.all.length }}
             </div>
@@ -17,7 +17,7 @@
           </router-link>
         </van-col>
         <van-col span="12">
-          <router-link to="/diary">
+          <router-link to="/diary/favor">
             <div class="number-view">
               {{ this.$store.state.statistic.diary.favor.length }}
             </div>
@@ -38,7 +38,14 @@
     </StandardCard>
     <StandardCard id="tags">
       <van-tabs color="#ffffff">
-        <van-tab title="标签">内容</van-tab>
+        <router-link to="/tag">
+        <van-tab title="标签">
+          <Tag v-for="tag in this.$store.state.statistic.tags" :key="tag.value">
+            <template #tagname>{{ tag.value }}</template>
+            <template #count>{{ tag.count }}</template>
+          </Tag>
+        </van-tab>
+        </router-link>
       </van-tabs>
     </StandardCard>
   </div>
@@ -48,15 +55,16 @@
 import StandardCard from "@/components/StandardCard.vue";
 import AvatarCard from "@/components/AvatarCard.vue";
 import Histogram from "@/components/Histogram.vue";
+import Tag from "@/components/Tag.vue";
 
 export default {
   name: "Home",
   components: {
     StandardCard,
     AvatarCard,
-    Histogram
+    Histogram,
+    Tag
   },
-  mounted() {},
   computed: {
     diaryname() {
       return this.$store.state.basic.diaryname == ""
@@ -91,6 +99,11 @@ export default {
         font-size: 0.7em;
         color: #888888;
       }
+    }
+  }
+  #tags{
+    .tag{
+      margin: 5px;
     }
   }
 }

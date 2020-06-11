@@ -4,7 +4,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    token: ""
+    token: "",
+    newDate: new Date()
   },
   mutations: {
   },

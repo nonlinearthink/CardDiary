@@ -22,7 +22,7 @@ const routes = [
   {
     path: "/add",
     name: "Add",
-    component: () => import("../views/Add.vue"),
+    component: () => import("../views/AddPage.vue"),
   },
   {
     path: "/calendar",
@@ -32,17 +32,22 @@ const routes = [
   {
     path: "/setting",
     name: "Setting",
-    component: () => import("../views/Setting.vue"),
+    component: () => import("../views/SettingPage.vue"),
   },
   {
-    path: "/diary",
+    path: "/diary/all",
     name: "Diary",
-    component: () => import("../views/DiaryList.vue"),
+    component: () => import("../views/AllDiaryPage.vue"),
+  },
+  {
+    path: "/diary/favor",
+    name: "Diary",
+    component: () => import("../views/FavorDiaryPage.vue"),
   },
   {
     path: "/tag",
     name: "Tag",
-    component: () => import("../views/Tag.vue"),
+    component: () => import("../views/TagPage.vue"),
   },
 ];
 
