@@ -24,6 +24,25 @@ export default {
       password: ""
     };
   },
+  created() {
+    //数据恢复
+    if (sessionStorage.getItem("store")) {
+      console.log("加载数据: ")
+      console.log(sessionStorage.getItem("store"))
+      this.$store.replaceState(
+        Object.assign(
+          {},
+          this.$store.state,
+          JSON.parse(sessionStorage.getItem("store"))
+        )
+      );
+    }
+    //数据保存
+    window.addEventListener("beforeunload", () => {
+      sessionStorage.setItem("store", JSON.stringify(this.$store.state));
+      console.log("保存数据");
+    });
+  },
   computed: {
     offTabBar() {
       return this.$route.path != "/" && this.$route.path != "/signup";

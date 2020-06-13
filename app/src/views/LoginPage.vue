@@ -51,10 +51,11 @@ export default {
     };
   },
   methods: {
-    onSubmit(values) {
+    async onSubmit(values) {
+      //base64加密账号密码
       var auth = `${values.username}:${values.password}`;
       var base64 = Buffer.from(auth, "ascii").toString("base64");
-      this.$axios({
+      await this.$axios({
         method: "GET",
         url: `http://127.0.0.1:8000/api/users`,
         headers: {
@@ -62,12 +63,13 @@ export default {
         }
       })
         .then(res => {
+          console.log("服务端返回: ");
           console.log(res);
           if (res.data.success) {
-            this.$store.state.author = values.username;
-            this.$store.state.token = res.data.token;
-            this.$store.state.basic = res.data.basic;
-            this.$store.state.statistic = res.data.statistic;
+            res.data.user = values.username;
+            this.$store.commit("login", res.data);
+            console.log("state更新");
+            console.log(this.$store.state);
             this.$router.push("home");
           } else {
             this.showMessage = true;

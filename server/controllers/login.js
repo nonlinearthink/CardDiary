@@ -47,15 +47,13 @@ module.exports = async (ctx, next) => {
       let count = (await diaryModel.queryTag(user.name, doc.tag)).length;
       tags.push({ value: doc.tag, count });
     });
-    msg.statistic = {
-      diary: {
-        all: await diaryModel.queryAll(user.name),
-        favor: await diaryModel.queryFavor(user.name),
-      },
-      moods,
-      weathers,
-      tags,
+    msg.diaries = {
+      all: await diaryModel.queryAll(user.name),
+      favor: await diaryModel.queryFavor(user.name),
     };
+    msg.moods = moods;
+    msg.weathers = weathers;
+    msg.tags = tags;
   }
   ctx.status = msg.success ? 200 : 403;
   ctx.body = msg;

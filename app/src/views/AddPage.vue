@@ -9,7 +9,9 @@
       </template>
       <template #title>
         <div class="calendar-title">
-          {{`${date.getMonth()+1}月${date.getDate()}/${date.getFullYear()}`}}
+          {{
+            `${date.getMonth() + 1}月${date.getDate()}/${date.getFullYear()}`
+          }}
         </div>
       </template>
       <template #right>
@@ -74,6 +76,7 @@ export default {
       title: "",
       body: "",
       date: null,
+      diary: null
     };
   },
   methods: {
@@ -103,7 +106,7 @@ export default {
           isChange = true;
         }
       }
-      
+
       if (!isChange)
         this.$store.state.statistic.moods.push({
           value: this.currentMood,
@@ -140,8 +143,35 @@ export default {
   },
   mounted() {
     var _this = this;
-    _this.date = this.$store.state.newDate;
-  },
+    var dateToModify = _this.$store.state.dateToModify;
+    let isFound = false;
+    for (let diary of this.$store.state.statistic.diary.all.length) {
+      if (
+        diary.date.year == dateToModify.getFullYear() &&
+        diary.date.month == dateToModify.getMonth() &&
+        diary.date.day == dateToModify.getDate()
+      ) {
+        _this.diary = d;
+        isfound = true;
+      }
+    }
+    if (!isFound) {
+      _this.diary = {
+        date: {
+          year: dateToModify.getFullYear(),
+          month: dateToModify.getMonth(),
+          day: dateToModify.getDate()
+        },
+        title: "",
+        author: this.$store.state.user,
+        mood: "开心",
+        weather: "晴天",
+        tag: "python,array",
+        body: "今天我学习了Python，收获匪浅。",
+        favor: true
+      };
+    }
+  }
 };
 </script>
 

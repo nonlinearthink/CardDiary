@@ -9,7 +9,7 @@
         <van-col span="12" class="count-view">
           <router-link to="/diary/all">
             <div class="number-view">
-              {{ this.$store.state.statistic.diary.all.length }}
+              {{ this.$store.state.diaries.all.length }}
             </div>
             <div class="title-view">
               所有日记
@@ -19,7 +19,7 @@
         <van-col span="12">
           <router-link to="/diary/favor">
             <div class="number-view">
-              {{ this.$store.state.statistic.diary.favor.length }}
+              {{ this.$store.state.diaries.favor.length }}
             </div>
             <div class="title-view">喜欢的日记</div>
           </router-link>
@@ -29,10 +29,10 @@
     <StandardCard id="statistic">
       <van-tabs color="#ffffff">
         <van-tab title="天气">
-          <Histogram :items="this.$store.state.statistic.weathers"></Histogram>
+          <Histogram :items="this.$store.state.weathers"></Histogram>
         </van-tab>
         <van-tab title="心情">
-          <Histogram :items="this.$store.state.statistic.moods"></Histogram>
+          <Histogram :items="this.$store.state.moods"></Histogram>
         </van-tab>
       </van-tabs>
     </StandardCard>
@@ -40,7 +40,7 @@
       <van-tabs color="#ffffff">
         <router-link to="/tag">
         <van-tab title="标签">
-          <Tag v-for="tag in this.$store.state.statistic.tags" :key="tag.value">
+          <Tag v-for="tag in this.$store.state.tags" :key="tag.value">
             <template #tagname>{{ tag.value }}</template>
             <template #count>{{ tag.count }}</template>
           </Tag>
