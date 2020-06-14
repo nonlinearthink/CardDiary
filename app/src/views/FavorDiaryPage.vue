@@ -3,7 +3,7 @@
     <van-nav-bar title="喜欢的日记" left-arrow @click-left="goBack" palceholder></van-nav-bar>
     <div class="diarylist">
       <StandardCard
-        v-for="diary in this.$store.state.statistic.diary.favor"
+        v-for="diary in this.$store.getters.getFavorDiaries"
         :key="diary._id"
       >
         <div class="body">{{ diary.body }}</div>

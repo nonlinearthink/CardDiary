@@ -27,8 +27,8 @@ export default {
   created() {
     //数据恢复
     if (sessionStorage.getItem("store")) {
-      console.log("加载数据: ")
-      console.log(sessionStorage.getItem("store"))
+      console.log("加载数据: ");
+      console.log(sessionStorage.getItem("store"));
       this.$store.replaceState(
         Object.assign(
           {},
@@ -36,6 +36,7 @@ export default {
           JSON.parse(sessionStorage.getItem("store"))
         )
       );
+      this.$store.commit("setDateToModify", new Date());
     }
     //数据保存
     window.addEventListener("beforeunload", () => {

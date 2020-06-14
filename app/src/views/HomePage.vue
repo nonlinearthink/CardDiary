@@ -9,7 +9,7 @@
         <van-col span="12" class="count-view">
           <router-link to="/diary/all">
             <div class="number-view">
-              {{ this.$store.state.diaries.all.length }}
+              {{ this.$store.getters.countAllDiary }}
             </div>
             <div class="title-view">
               所有日记
@@ -19,7 +19,7 @@
         <van-col span="12">
           <router-link to="/diary/favor">
             <div class="number-view">
-              {{ this.$store.state.diaries.favor.length }}
+              {{ this.$store.getters.countFavorDiary }}
             </div>
             <div class="title-view">喜欢的日记</div>
           </router-link>
@@ -29,22 +29,22 @@
     <StandardCard id="statistic">
       <van-tabs color="#ffffff">
         <van-tab title="天气">
-          <Histogram :items="this.$store.state.weathers"></Histogram>
+          <Histogram :items="this.$store.getters.getWeathers"></Histogram>
         </van-tab>
         <van-tab title="心情">
-          <Histogram :items="this.$store.state.moods"></Histogram>
+          <Histogram :items="this.$store.getters.getMoods"></Histogram>
         </van-tab>
       </van-tabs>
     </StandardCard>
     <StandardCard id="tags">
       <van-tabs color="#ffffff">
         <router-link to="/tag">
-        <van-tab title="标签">
-          <Tag v-for="tag in this.$store.state.tags" :key="tag.value">
-            <template #tagname>{{ tag.value }}</template>
-            <template #count>{{ tag.count }}</template>
-          </Tag>
-        </van-tab>
+          <van-tab title="标签">
+            <Tag v-for="tag in this.$store.getters.getTags" :key="tag.value">
+              <template #tagname>{{ tag.value }}</template>
+              <template #count>{{ tag.count }}</template>
+            </Tag>
+          </van-tab>
         </router-link>
       </van-tabs>
     </StandardCard>
@@ -101,9 +101,13 @@ export default {
       }
     }
   }
-  #tags{
-    .tag{
+  #tags {
+    .tag {
       margin: 5px;
+    }
+    a {
+      text-decoration: none;
+      color: #888;
     }
   }
 }

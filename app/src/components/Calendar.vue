@@ -44,9 +44,15 @@ export default {
         if (isStart && !isEnd) this.placeholders[i] = increaser++;
       }
     },
-    createDiary(value){
-      this.$store.state.newDate = new Date(`${this.time.getFullYear()}-${this.time.getMonth()+1}-${value}`);
-      this.$router.push('add');
+    createDiary(value) {
+      this.$store.commit(
+        "setDateToModify",
+        new Date(
+          `${this.time.getFullYear()}-${this.time.getMonth() + 1}-${value}`
+        )
+      );
+      console.log("创建日记: " + this.$store.getters.getDateToModifyString);
+      this.$router.push("add");
     }
   },
   watch: {

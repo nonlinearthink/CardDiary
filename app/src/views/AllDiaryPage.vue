@@ -3,7 +3,7 @@
     <van-nav-bar title="所有日记" left-arrow @click-left="goBack" palceholder></van-nav-bar>
     <div class="diarylist">
       <StandardCard
-        v-for="diary in this.$store.state.statistic.diary.all"
+        v-for="diary in this.$store.getters.getAllDiaries"
         :key="diary._id"
       >
         <div class="body">{{ diary.body }}</div>

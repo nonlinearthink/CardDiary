@@ -9,9 +9,7 @@
       </template>
       <template #title>
         <div class="calendar-title">
-          {{
-            `${date.getMonth() + 1}月${date.getDate()}/${date.getFullYear()}`
-          }}
+          {{ `${diary.date.month + 1}月${diary.date.day}/${diary.date.year}` }}
         </div>
       </template>
       <template #right>
@@ -19,14 +17,14 @@
       </template>
     </van-nav-bar>
     <div id="main">
-      <van-field v-model="title" label="Title" class="title" />
+      <van-field v-model="diary.title" label="Title" class="title" />
       <div class="setbar" @click="pickerHandler">
         <van-row>
           <van-col span="6"
-            ><font-awesome-icon icon="smile-beam" /> {{ currentMood }}</van-col
+            ><font-awesome-icon icon="smile-beam" /> {{ diary.mood }}</van-col
           >
           <van-col span="6"
-            ><font-awesome-icon icon="cloud" /> {{ currentWeather }}</van-col
+            ><font-awesome-icon icon="cloud" /> {{ diary.weather }}</van-col
           >
           <van-col span="6"
             ><font-awesome-icon icon="heart" :style="{ color: setColor }"
@@ -37,7 +35,7 @@
       <textarea
         class="content-area"
         placeholder="写下你的今天..."
-        v-model="body"
+        v-model="diary.body"
       ></textarea>
     </div>
     <van-popup v-model="pickerVisable" position="bottom">
@@ -57,106 +55,68 @@
       <van-divider />
       <van-row>
         <van-col span="12">喜欢</van-col>
-        <van-col span="12"><van-switch v-model="isFavor"/></van-col>
+        <van-col span="12"><van-switch v-model="diary.favor"/></van-col>
       </van-row>
     </van-popup>
   </div>
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   data() {
     return {
       pickerVisable: false,
       moods: ["开心", "着迷", "调皮", "无语", "生气", "难过", "伤心", "惊讶"],
-      currentMood: "开心",
       weathers: ["晴天", "多云", "小雨", "小雪", "雷雨", "台风", "暴雨", "无"],
-      currentWeather: "无",
-      isFavor: false,
-      title: "",
-      body: "",
       date: null,
-      diary: null
+      diary: null,
+      isFound: false
     };
   },
   methods: {
     submit() {
-      var diary = {
-        date: {
-          year: new Date().getFullYear(),
-          month: new Date().getMonth(),
-          day: new Date().getDate()
-        },
-        title: this.title,
-        author: this.$store.state.author,
-        mood: this.currentMood,
-        weather: this.currentWeather,
-        tag: "python,array",
-        body: this.body,
-        favor: this.isFavor
-      };
-      this.$store.state.statistic.diary.all.push(diary);
-      if (this.isFavor) {
-        this.$store.state.statistic.diary.favor.push(diary);
-      }
-      let isChange = false;
-      for (let m of this.$store.state.statistic.moods) {
-        if (m.value == this.currentMood) {
-          m.count++;
-          isChange = true;
-        }
-      }
-
-      if (!isChange)
-        this.$store.state.statistic.moods.push({
-          value: this.currentMood,
-          count: 1
-        });
-      isChange = false;
-      for (let w of this.$store.state.statistic.weathers) {
-        if (w.value == this.currentWeather) {
-          w.count++;
-          isChange = true;
-        }
-      }
-      if (!isChange)
-        this.$store.state.statistic.weathers.push({
-          value: this.currentMood,
-          count: 1
-        });
+      this.$store.state.getters.pushDiary(diary);
+      this.dateToModify = new Date();
       this.$router.push("/home");
     },
     pickerHandler() {
       this.pickerVisable = !this.pickerVisable;
     },
     changeMood(mood) {
-      this.currentMood = mood;
+      this.diary.mood = mood;
     },
     changeWeather(weather) {
-      this.currentWeather = weather;
+      this.diary.weather = weather;
     }
   },
   computed: {
     setColor() {
-      return this.isFavor ? "blue" : "black";
+      return this.diary.favor ? "red" : "black";
     }
   },
-  mounted() {
+  created() {
     var _this = this;
-    var dateToModify = _this.$store.state.dateToModify;
+    var dateToModify = this.$store.getters.getDateToModify;
+    console.log(typeof dateToModify);
     let isFound = false;
-    for (let diary of this.$store.state.statistic.diary.all.length) {
+    let diarySet = this.$store.getters.getAllDiaries;
+    console.log("查询是否存在记录");
+    for (let i in diarySet) {
       if (
-        diary.date.year == dateToModify.getFullYear() &&
-        diary.date.month == dateToModify.getMonth() &&
-        diary.date.day == dateToModify.getDate()
+        diarySet[i].date.year == dateToModify.getFullYear() &&
+        diarySet[i].date.month == dateToModify.getMonth()+1 &&
+        diarySet[i].date.day == dateToModify.getDate()
       ) {
-        _this.diary = d;
-        isfound = true;
+        this.diary = diarySet[i];
+        console.log("查证存在记录，加载数据....");
+        isFound = true;
       }
     }
     if (!isFound) {
-      _this.diary = {
+      console.log("创建新记录");
+      this.diary = {
         date: {
           year: dateToModify.getFullYear(),
           month: dateToModify.getMonth(),
@@ -166,11 +126,12 @@ export default {
         author: this.$store.state.user,
         mood: "开心",
         weather: "晴天",
-        tag: "python,array",
-        body: "今天我学习了Python，收获匪浅。",
-        favor: true
+        tag: "",
+        body: "",
+        favor: false
       };
     }
+    console.log(this.diary);
   }
 };
 </script>
