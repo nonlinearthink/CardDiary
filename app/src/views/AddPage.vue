@@ -77,7 +77,22 @@ export default {
   },
   methods: {
     submit() {
-      this.$store.state.getters.pushDiary(diary);
+      this.$store.commit("pushDiary", this.diary);
+      this.$axios({
+        method: "POST",
+        url:
+          `http://127.0.0.1:8000/api/users/${this.$store.state.user}/diaries` +
+          `?title=${this.diary.title}` +
+          `&mood=${this.diary.mood}` +
+          `&weather=${this.diary.weather}` +
+          `&favor=${this.diary.favor ? 1 : 0}` +
+          `&tags=${this.diary.tags}` +
+          `&body=${this.diary.body}` +
+          `&date=${this.parseDate(this.diary.date)}`,
+        headers: {
+          token: this.$store.state.token
+        }
+      });
       this.dateToModify = new Date();
       this.$router.push("/home");
     },
@@ -89,6 +104,9 @@ export default {
     },
     changeWeather(weather) {
       this.diary.weather = weather;
+    },
+    parseDate(date) {
+      return new Date(`${date.year}-${date.month}-${date.day}`);
     }
   },
   computed: {
@@ -99,14 +117,13 @@ export default {
   created() {
     var _this = this;
     var dateToModify = this.$store.getters.getDateToModify;
-    console.log(typeof dateToModify);
     let isFound = false;
     let diarySet = this.$store.getters.getAllDiaries;
     console.log("查询是否存在记录");
     for (let i in diarySet) {
       if (
         diarySet[i].date.year == dateToModify.getFullYear() &&
-        diarySet[i].date.month == dateToModify.getMonth()+1 &&
+        diarySet[i].date.month == dateToModify.getMonth() + 1 &&
         diarySet[i].date.day == dateToModify.getDate()
       ) {
         this.diary = diarySet[i];

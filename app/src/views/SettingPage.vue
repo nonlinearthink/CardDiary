@@ -1,6 +1,11 @@
 <template>
   <div class="setting-page">
-    <van-nav-bar title="设置" left-arrow @click-left="goBack" palceholder></van-nav-bar>
+    <van-nav-bar
+      title="设置"
+      left-arrow
+      @click-left="goBack"
+      palceholder
+    ></van-nav-bar>
     <label class="setting-label">日记本头像</label>
     <van-uploader :after-read="afterRead" />
     <label class="setting-label">日记本名称</label>
@@ -15,6 +20,22 @@ export default {
   name: "Setting",
   methods: {
     goBack() {
+      this.$axios({
+        method: "POST",
+        url:
+          `http://127.0.0.1:8000/api/users/${this.$store.state.user}/basic` +
+          `?name=${this.$store.state.basic.diaryname}` +
+          `&feeling=${this.$store.state.basic.feeling}` +
+          `&avatar=${this.$store.state.basic.avatar}`,
+        headers: {
+          token: this.$store.state.token
+        }
+      }).then(res => {
+        console.log(res);
+        if (res.data.success) {
+          console.log("更新远程数据库成功");
+        }
+      });
       this.$router.go(-1);
     }
   },

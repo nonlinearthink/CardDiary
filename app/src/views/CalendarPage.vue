@@ -79,8 +79,6 @@
 import StandardCard from "@/components/StandardCard.vue";
 import Poker from "@/components/Poker.vue";
 import Calendar from "@/components/Calendar.vue";
-import colorSetting from "@/static/color.js";
-import monthName from "@/static/month.js";
 
 export default {
   name: "CalendarPage",
@@ -132,11 +130,12 @@ export default {
   },
   mounted() {
     var _this = this;
-    let monthArray = monthName;
-    _this.colors = colorSetting.colors;
-    _this.defaultColor = colorSetting.default;
+    let monthLimit = this.$store.getters.getMonthLimit;
+    let colorLimit = this.$store.getters.getColorLimit;
+    _this.colors = colorLimit.colors;
+    _this.defaultColor = colorLimit.default;
     for (let i = 0; i < 12; i++) {
-      _this.cards.push({ month: monthArray[i], bgColor: _this.defaultColor });
+      _this.cards.push({ month: monthLimit[i], bgColor: _this.defaultColor });
     }
   }
 };

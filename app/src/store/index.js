@@ -20,6 +20,41 @@ export default new Vuex.Store({
     tags: [],
     dateToModify: new Date(),
     isExist: false,
+    colorLimit: {
+      default: "#00ccff",
+      colors: [
+        "DeepSkyBlue",
+        "DodgerBlue",
+        "RoyalBlue",
+        "MediumSlateBlue",
+        "Orchid",
+        "Tomato",
+        "GoldenRod",
+        "Gold",
+        "YellowGreen",
+        "LightGreen",
+        "MediumAquaMarine",
+        "DarkTurquoise",
+        "LightSteelBlue",
+        "LightSlateGray",
+        "Gray",
+        "black",
+      ],
+    },
+    monthLimit: [
+      "JAN",
+      "FEB",
+      "MAR",
+      "APR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AUG",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DEC",
+    ],
   },
   mutations: {
     setDateToModify(state, dateToModify) {
@@ -117,5 +152,11 @@ export default new Vuex.Store({
       var d = state.dateToModify;
       return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
     },
+    getColorLimit(state){
+      return state.colorLimit;
+    },
+    getMonthLimit(state){
+      return state.monthLimit;
+    }
   },
 });
